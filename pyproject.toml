@@ -1,0 +1,40 @@
+[build-system]
+requires = ["flit_core >=2,<4"]
+build-backend = "flit_core.buildapi"
+
+[tool.flit.metadata]
+module = "brokermint"
+author = "Doug Guthrie"
+author-email = "douglas.p.guthrie@gmail.com"
+home-page = "https://github.com/dpguthrie/brokermint"
+keywords = "real estate, api, api-wrapper, python, brokermint"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Real Estate",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+]
+requires = [
+    "requests>=2.24.0",
+]
+description-file = "README.md"
+
+[tool.flit.metadata.requires-extra]
+test = [
+    'pytest',
+    'coverage',
+    'pytest-cov'
+]
+doc = [
+    'mkdocs-material',
+    'pymdown-extensions'
+]
+
+[tool.flit.metadata.urls]
+Documentation = "https://brokermint.dpguthrie.com"
