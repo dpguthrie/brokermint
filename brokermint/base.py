@@ -122,6 +122,7 @@ class Client:
                 "retrieve": "/v2/reports/{report_id}",
             },
         },
+        "sso": {"retrieve": "/v1/users/{user_id}/sso_token"},
     }
 
     def __init__(self, api_key=None):
@@ -1422,3 +1423,19 @@ class Client:
                 "report_id": report_id,
             },
         )
+
+    def get_sso_token(self, user_id: int):
+        """Get SSO token for user
+
+        Note
+        ----
+        SSO API allows a user to remotely login to Brokermint.  To login a user into
+        Brokermint using the sso token, redirect the user to the URL:
+        https://my.brokermint.com/users/sign_in_by_token?token=<token>
+
+        Parameters
+        ----------
+        report_id: int, required
+            ID of report
+        """
+        return self._get_data("sso", "retrieve", uri_params={"user_id": user_id})
