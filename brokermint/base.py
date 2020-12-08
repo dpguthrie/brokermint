@@ -138,7 +138,7 @@ class Client:
         params: dict = None,
         data: dict = None,
         files: dict = None,
-        required_fields: List = None,
+        required_fields: List[str] = None,
     ):
         """Entrypoint to getting data from Brokermint API
 
@@ -216,7 +216,7 @@ class Client:
         params: dict,
         data: dict,
         files: dict,
-        required_fields: List = None,
+        required_fields: List[str],
     ):
         """Request data from the API
 
@@ -493,7 +493,9 @@ class Client:
                     options: str
                     value: str
         """
-        return self._get_data("contacts", "create", data=data)
+        return self._get_data(
+            "contacts", "create", data=data, required_fields=["email"]
+        )
 
     def get_contact(self, contact_id: int):
         """Get Contact
@@ -764,9 +766,9 @@ class Client:
             Data used to create a user participant.  Fields available are:
                 id: int, required
                     User ID
-                preserve_existing_role: bool, required
+                preserve_existing_role: bool, optional
                     Flag to not modify existing role
-                role: str
+                role: str, required
                     Person role in transaction
                 owner: bool
                     Indicates whether the person owns this transaction.  There can
@@ -779,6 +781,7 @@ class Client:
             within="users",
             uri_params={"transaction_id": transaction_id},
             data=data,
+            required_fields=["role", "id"],
         )
 
     def get_user_transaction_participant(
@@ -818,9 +821,9 @@ class Client:
             Data used to update a user participant.  Fields available are:
                 id: int, required
                     User ID
-                preserve_existing_role: bool, required
+                preserve_existing_role: bool, optional
                     Flag to not modify existing role
-                role: str
+                role: str, optional
                     Person role in transaction
                 owner: bool
                     Indicates whether the person owns this transaction.  There can
@@ -833,6 +836,7 @@ class Client:
             within="users",
             uri_params={"transaction_id": transaction_id, "user_id": user_id},
             data=data,
+            required_fields=["id"],
         )
 
     def delete_user_transaction_participant(self, transaction_id: int, user_id: int):
@@ -883,9 +887,9 @@ class Client:
             Data used to create a contact participant.  Fields available are:
                 id: int, required
                     Contact ID
-                preserve_existing_role: bool, required
+                preserve_existing_role: bool, optional
                     Flag to not modify existing role
-                role: str
+                role: str, required
                     Person role in transaction
                 owner: bool
                     Indicates whether the person owns this transaction.  There can
@@ -898,6 +902,7 @@ class Client:
             within="contactts",
             uri_params={"transaction_id": transaction_id},
             data=data,
+            required_fields=["id", "role"],
         )
 
     def get_contact_transaction_participant(
@@ -952,6 +957,7 @@ class Client:
             within="contacts",
             uri_params={"transaction_id": transaction_id, "contact_id": contact_id},
             data=data,
+            required_fields=["id"],
         )
 
     def delete_contact_transaction_participant(
